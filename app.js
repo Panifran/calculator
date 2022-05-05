@@ -1,14 +1,5 @@
-const zero = document.querySelector('#zero');
-const one = document.querySelector('#one');
-const two = document.querySelector('#two');
-const three = document.querySelector('#three');
-const four = document.querySelector('#four');
-const five = document.querySelector('#five');
-const six = document.querySelector('#six');
-const seven = document.querySelector('#seven');
-const eight = document.querySelector('#eight');
-const nine = document.querySelector('#nine');
-const decimal = document.querySelector('#decimal');
+
+const numberButtons = document.querySelectorAll('.number');
 const add = document.querySelector('#add');
 const subtract = document.querySelector('#subtract');
 const divide = document.querySelector('#divide');
@@ -19,77 +10,74 @@ const screenTop = document.querySelector('#screen-top');
 const clear = document.querySelector('#clear');
 
 let number = 0;
-let updateNumber = 0;
 let operation = '+';
 let decimalNumber;
+let aux = 0;
+let screen;
 
-const numbers = [zero, one, two, three, four, five, six, seven, eight, nine, decimal];
-
-for (let num of numbers) {
+numberButtons.forEach(num => {
   num.addEventListener('click', function () {
-    number += num.textContent;
-    decimalNumber = parseFloat(number);
-    console.log(parseFloat(number));
+    number = num.textContent;
+    aux += number;
+    decimalNumber = parseFloat(aux);
     screenBottom.textContent = '';
-    screenTop.textContent = decimalNumber;
-    
-  });
-  
-}
-
-function operate() {
-  if (operation == '+') {
-    updateNumber += decimalNumber;
-  } else if (operation == '-') {
-    updateNumber -= decimalNumber;
-  } else if (operation == '*') {
-    updateNumber *= decimalNumber;
-  } else if (operation == '/') {
-    updateNumber /= decimalNumber;
-  }
-}
+    screen = screenTop.textContent += number;
+  })
+});
 
 add.addEventListener('click', function () {
-  operate();
-  console.log(updateNumber);
-  operation = '+';
   screenTop.textContent += ' + ';
-  number = 0;
-
 });
 
 subtract.addEventListener('click', function () {
-  operate();
-  console.log(updateNumber);
-  operation = '-';
-  number = 0;
+  screenTop.textContent += ' - ';
 });
 
 multiply.addEventListener('click', function () {
-  operate();
-  console.log(updateNumber);
-  operation = '*';
-  number = 0;
+  screenTop.textContent += ' * ';
 });
 
 divide.addEventListener('click', function () {
-  operate();
-  console.log(updateNumber);
-  operation = '/';
-  number = 0;
+  screenTop.textContent += ' / ';
 });
 
+function calculateString(str) {
+  var valArr = str.split(/\s[+-/*]\s/),//split string on each operator (having a space either side allowing for a negative value)
+    opArr = str.match(/\s[+-/*]\s/g);//return all operators from string
+
+  for (var i = 0, len = valArr.length; i < len; i++) {
+    //convert each value to a number instead of string
+    valArr[i] = +valArr[i];
+  }
+  for (var i = 0, len = opArr.length; i < len; i++) {
+    //cleanup whitespace from operators
+    opArr[i] = opArr[i].trim();
+  }
+
+  var currentTotal = valArr[0];
+  for (var i = 0, len = opArr.length; i < len; i++) {
+    switch (opArr[i]) {
+      case '+':
+        currentTotal = currentTotal + valArr[i + 1];
+        break;
+      case '-':
+        currentTotal = currentTotal - valArr[i + 1];
+        break;
+      case '*':
+        currentTotal = currentTotal * valArr[i + 1];
+        break;
+      case '/':
+        currentTotal = currentTotal / valArr[i + 1];
+        break;
+    }
+  }
+  return currentTotal;
+}
 equals.addEventListener('click', function () {
-  operate();
-  console.log(updateNumber);
-  number = 0;
-  screenBottom.textContent = updateNumber;
-  updateNumber = 0;
+  screenBottom.textContent = calculateString(screen);
 });
 
-clear.addEventListener('click', function() {
-  number = 0;
+clear.addEventListener('click', function () {
   screenBottom.textContent = '';
   screenTop.textContent = '';
-  updateNumber = 0;
 })
