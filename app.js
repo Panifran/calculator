@@ -8,9 +8,9 @@ const equals = document.querySelector('#equals');
 const screenBottom = document.querySelector('#screen-bottom');
 const screenTop = document.querySelector('#screen-top');
 const clear = document.querySelector('#clear');
+const erase = document.querySelector('#delete');
 
 let number = 0;
-let operation = '+';
 let decimalNumber;
 let aux = 0;
 let screen;
@@ -80,4 +80,9 @@ equals.addEventListener('click', function () {
 clear.addEventListener('click', function () {
   screenBottom.textContent = '';
   screenTop.textContent = '';
+})
+
+erase.addEventListener('click', function () {
+  screen = screen.slice(0, -1);
+  screenTop.textContent = screen;
 })
