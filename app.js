@@ -21,24 +21,43 @@ numberButtons.forEach(num => {
     aux += number;
     decimalNumber = parseFloat(aux);
     screenBottom.textContent = '';
-    screen = screenTop.textContent += number;
+    if (number == '.' && !screen.includes('.')) {
+      screen = screenTop.textContent += number;
+    } else if (number != '.') {
+      screen = screenTop.textContent += number;
+    }
+    console.log('number: ' + number);
+    console.log('screen:' + screen);
+
   })
 });
 
 add.addEventListener('click', function () {
-  screenTop.textContent += ' + ';
+  if (screen[screen.length - 2] != '+' && screen[screen.length - 2] != '-' && screen[screen.length - 2] != '*'
+    && screen[screen.length - 2] != '/' && screen[screen.length - 1] != '.') {
+    screen = screenTop.textContent += ' + ';
+  }
 });
 
 subtract.addEventListener('click', function () {
-  screenTop.textContent += ' - ';
+  if (screen[screen.length - 2] != '+' && screen[screen.length - 2] != '-' && screen[screen.length - 2] != '*'
+    && screen[screen.length - 2] != '/' && screen[screen.length - 1] != '.') {
+    screen = screenTop.textContent += ' - ';
+  }
 });
 
 multiply.addEventListener('click', function () {
-  screenTop.textContent += ' * ';
+  if (screen[screen.length - 2] != '+' && screen[screen.length - 2] != '-' && screen[screen.length - 2] != '*'
+    && screen[screen.length - 2] != '/' && screen[screen.length - 1] != '.') {
+    screen = screenTop.textContent += ' * ';
+  }
 });
 
 divide.addEventListener('click', function () {
-  screenTop.textContent += ' / ';
+  if (screen[screen.length - 2] != '+' && screen[screen.length - 2] != '-' && screen[screen.length - 2] != '*'
+    && screen[screen.length - 2] != '/' && screen[screen.length - 1] != '.') {
+    screen = screenTop.textContent += ' / ';
+  }
 });
 
 function calculateString(str) {
@@ -73,8 +92,14 @@ function calculateString(str) {
   }
   return currentTotal;
 }
+
 equals.addEventListener('click', function () {
-  screenBottom.textContent = calculateString(screen);
+  if (calculateString(screen) != 'Infinity') {
+    screenBottom.textContent = Math.round(calculateString(screen) * 10000) / 10000;;
+  } else {
+    alert('You cannot divide by 0');
+  }
+
 });
 
 clear.addEventListener('click', function () {
@@ -86,3 +111,63 @@ erase.addEventListener('click', function () {
   screen = screen.slice(0, -1);
   screenTop.textContent = screen;
 })
+
+document.addEventListener('keydown', (event) => {
+  const keyName = event.key;
+  if (keyName == 1 || keyName == 2 || keyName == 3 || keyName == 4 ||
+    keyName == 5 || keyName == 6 || keyName == 7 || keyName == 8 || keyName == 9 || keyName == 0
+    || keyName == '.') {
+    number = keyName;
+    aux += number;
+    decimalNumber = parseFloat(aux);
+    screenBottom.textContent = '';
+    if (number == '.' && !screen.includes('.')) {
+      screen = screenTop.textContent += number;
+    } else if (number != '.') {
+      screen = screenTop.textContent += number;
+    }
+  };
+
+  if ((keyName == '+') && ((screen[screen.length - 2] != '+' && screen[screen.length - 2] != '-' && screen[screen.length - 2] != '*'
+    && screen[screen.length - 2] != '/' && screen[screen.length - 1] != '.'))) {
+    screen = screenTop.textContent += ' + ';
+  };
+
+  if (keyName == '=') {
+    if (calculateString(screen) != 'Infinity') {
+      screenBottom.textContent = Math.round(calculateString(screen) * 10000) / 10000;;
+    } else {
+      alert('You cannot divide by 0');
+    }
+  }
+
+  if (keyName == 'Backspace') {
+    screen = screen.slice(0, -1);
+    screenTop.textContent = screen;
+  }
+
+if (keyName == '-') {
+  if (screen[screen.length - 2] != '+' && screen[screen.length - 2] != '-' && screen[screen.length - 2] != '*'
+    && screen[screen.length - 2] != '/' && screen[screen.length - 1] != '.') {
+    screen = screenTop.textContent += ' - ';
+  }
+}
+if (keyName == '*') {
+  if (screen[screen.length - 2] != '+' && screen[screen.length - 2] != '-' && screen[screen.length - 2] != '*'
+    && screen[screen.length - 2] != '/' && screen[screen.length - 1] != '.') {
+    screen = screenTop.textContent += ' * ';
+  }
+}
+
+if (keyName == '/') {
+  if (screen[screen.length - 2] != '+' && screen[screen.length - 2] != '-' && screen[screen.length - 2] != '*'
+    && screen[screen.length - 2] != '/' && screen[screen.length - 1] != '.') {
+    screen = screenTop.textContent += ' / ';
+  }
+}
+});
+document.addEventListener('keydown', (event) => {
+  const keyName = event.key;
+  console.log('keyName: ' + keyName);
+
+});
