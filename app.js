@@ -1,19 +1,17 @@
 
 const numberButtons = document.querySelectorAll('.number');
-const add = document.querySelector('#add');
-const subtract = document.querySelector('#subtract');
-const divide = document.querySelector('#divide');
-const multiply = document.querySelector('#multiply');
+const operations = document.querySelectorAll('.operation');
 const equals = document.querySelector('#equals');
 const screenBottom = document.querySelector('#screen-bottom');
 const screenTop = document.querySelector('#screen-top');
 const clear = document.querySelector('#clear');
 const erase = document.querySelector('#delete');
 
-let number = 0;
+let number = ' ';
 let decimalNumber;
 let aux = 0;
-let screen;
+let screen = '';
+let array = [];
 
 numberButtons.forEach(num => {
   num.addEventListener('click', function () {
@@ -21,43 +19,26 @@ numberButtons.forEach(num => {
     aux += number;
     decimalNumber = parseFloat(aux);
     screenBottom.textContent = '';
-    if (number == '.' && !screen.includes('.')) {
+  
+    if (number == '.' && !array.includes('.')) {
       screen = screenTop.textContent += number;
+      array.push(number);
     } else if (number != '.') {
       screen = screenTop.textContent += number;
+      array.push(number);
     }
-    console.log('number: ' + number);
-    console.log('screen:' + screen);
-
   })
 });
 
-add.addEventListener('click', function () {
-  if (screen[screen.length - 2] != '+' && screen[screen.length - 2] != '-' && screen[screen.length - 2] != '*'
+operations.forEach(ele => {
+  ele.addEventListener('click', function () {
+    const operation = ele.textContent;
+    if (screen[screen.length - 2] != '+' && screen[screen.length - 2] != '-' && screen[screen.length - 2] != '*'
     && screen[screen.length - 2] != '/' && screen[screen.length - 1] != '.') {
-    screen = screenTop.textContent += ' + ';
+    screen = screenTop.textContent += ' ' + operation + ' ';
+    array = [];
   }
-});
-
-subtract.addEventListener('click', function () {
-  if (screen[screen.length - 2] != '+' && screen[screen.length - 2] != '-' && screen[screen.length - 2] != '*'
-    && screen[screen.length - 2] != '/' && screen[screen.length - 1] != '.') {
-    screen = screenTop.textContent += ' - ';
-  }
-});
-
-multiply.addEventListener('click', function () {
-  if (screen[screen.length - 2] != '+' && screen[screen.length - 2] != '-' && screen[screen.length - 2] != '*'
-    && screen[screen.length - 2] != '/' && screen[screen.length - 1] != '.') {
-    screen = screenTop.textContent += ' * ';
-  }
-});
-
-divide.addEventListener('click', function () {
-  if (screen[screen.length - 2] != '+' && screen[screen.length - 2] != '-' && screen[screen.length - 2] != '*'
-    && screen[screen.length - 2] != '/' && screen[screen.length - 1] != '.') {
-    screen = screenTop.textContent += ' / ';
-  }
+  })
 });
 
 function calculateString(str) {
@@ -121,16 +102,19 @@ document.addEventListener('keydown', (event) => {
     aux += number;
     decimalNumber = parseFloat(aux);
     screenBottom.textContent = '';
-    if (number == '.' && !screen.includes('.')) {
+    if (number == '.' && !array.includes('.')) {
       screen = screenTop.textContent += number;
+      array.push(number);
     } else if (number != '.') {
       screen = screenTop.textContent += number;
+      array.push(number);
     }
   };
 
   if ((keyName == '+') && ((screen[screen.length - 2] != '+' && screen[screen.length - 2] != '-' && screen[screen.length - 2] != '*'
     && screen[screen.length - 2] != '/' && screen[screen.length - 1] != '.'))) {
     screen = screenTop.textContent += ' + ';
+    array = [];
   };
 
   if (keyName == '=') {
@@ -150,12 +134,14 @@ if (keyName == '-') {
   if (screen[screen.length - 2] != '+' && screen[screen.length - 2] != '-' && screen[screen.length - 2] != '*'
     && screen[screen.length - 2] != '/' && screen[screen.length - 1] != '.') {
     screen = screenTop.textContent += ' - ';
+    array = [];
   }
 }
 if (keyName == '*') {
   if (screen[screen.length - 2] != '+' && screen[screen.length - 2] != '-' && screen[screen.length - 2] != '*'
     && screen[screen.length - 2] != '/' && screen[screen.length - 1] != '.') {
     screen = screenTop.textContent += ' * ';
+    array = [];
   }
 }
 
@@ -163,11 +149,7 @@ if (keyName == '/') {
   if (screen[screen.length - 2] != '+' && screen[screen.length - 2] != '-' && screen[screen.length - 2] != '*'
     && screen[screen.length - 2] != '/' && screen[screen.length - 1] != '.') {
     screen = screenTop.textContent += ' / ';
+    array = [];
   }
 }
-});
-document.addEventListener('keydown', (event) => {
-  const keyName = event.key;
-  console.log('keyName: ' + keyName);
-
 });
