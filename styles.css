@@ -4,26 +4,79 @@
 }
 
 body {
-  margin-left: 50px;
+  background-color: #FCB31B;
+  margin: auto;
 }
 
 button {
-  height: 30px;
-  width: 50px;
+  height: 40px;
+  width: 40px;
   padding: 5px;
   box-sizing: content-box;
+  border: solid 1px black;
+  border-radius: 50%;
+  color: white;
+  font-weight: bold;
+  background-color: #3B3B3B;
 }
 
 #clear,
-#delete {
-  width: 100px;
-  padding: 10px;
+#equals {
+  width: 95px;
+  border-radius: 10px;
 }
 
 #screen {
-  margin: 10px;
-  width: 200px;
-  height: 30px;
-  padding: 20px;
+  height: 40px;
+  padding: 15px;
   border: solid 1px black;
+  background-color: #3B3B3B;
+  box-sizing: content-box;
+  margin: 10px;
+  border-radius: 10px;
+}
+
+#container {
+  width: 240px;
+  background-color: #212121;
+  box-sizing: content-box;
+  margin: auto auto 0;
+  margin-top: 200px;
+  padding: 5px 5px 10px 5px;
+  border-radius: 15px;
+}
+
+#screen-top {
+  margin-bottom: 5px;
+}
+
+#buttons {
+  display: flex;
+  justify-content: start;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin: 5px;
+  margin-top: 15px;
+}
+
+.orange {
+  background-color: #FCB31B;
+}
+
+.blue {
+  background-color: blue;
+}
+
+.violet {
+  background-color: violet;
+}
+
+.green {
+  color: rgb(194, 245, 194);
+}
+
+.white {
+  font-size: 20px;
+  font-weight: bolder;
+  color: white;
 }

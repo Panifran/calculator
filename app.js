@@ -6,12 +6,18 @@ const screenBottom = document.querySelector('#screen-bottom');
 const screenTop = document.querySelector('#screen-top');
 const clear = document.querySelector('#clear');
 const erase = document.querySelector('#delete');
+const special = document.querySelectorAll('.special');
 
 let number = ' ';
 let decimalNumber;
 let aux = 0;
 let screen = '';
 let array = [];
+
+screenTop.classList.add('green');
+screenTop.style.textAlign = "right";
+screenBottom.classList.add('white');
+screenBottom.style.textAlign = "right";
 
 numberButtons.forEach(num => {
   num.addEventListener('click', function () {
@@ -29,6 +35,34 @@ numberButtons.forEach(num => {
     }
   })
 });
+
+numberButtons.forEach(num => {
+  num.addEventListener('mouseenter', function () {
+    num.classList.add('orange');
+  });
+  num.addEventListener('mouseleave', function () {
+    num.classList.remove('orange');
+  })
+});
+
+operations.forEach(ele => {
+  ele.addEventListener('mouseenter', function () {
+    ele.classList.add('blue');
+  });
+  ele.addEventListener('mouseleave', function () {
+    ele.classList.remove('blue');
+  })
+});
+
+special.forEach(ele => {
+  ele.addEventListener('mouseenter', function () {
+    ele.classList.add('violet');
+  });
+  ele.addEventListener('mouseleave', function () {
+    ele.classList.remove('violet');
+  })
+});
+
 
 operations.forEach(ele => {
   ele.addEventListener('click', function () {
